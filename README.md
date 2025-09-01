@@ -19,6 +19,6 @@
 
 ### Power Reports
 
-![Normal ALU Report](images/normal_power.jpg)
+![Normal ALU Report](normal_power.jpg)
 
-![Clock Gated ALU report](images/clock_power.jpg)
+![Clock Gated ALU report](clock_power.jpg)
