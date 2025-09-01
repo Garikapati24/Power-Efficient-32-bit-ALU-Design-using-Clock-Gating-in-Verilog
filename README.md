@@ -2,7 +2,7 @@
 
 ## 🔬 Simulation Results
 ### Normal ALU
-![Normal ALU Waveform](images/normal.jpg)
+![Normal ALU Waveform](images/noraml.jpg)
 
 ![Normal ALU Waveform](images/normal_tb.jpg)
 
