@@ -16,3 +16,9 @@
 
 ### Clock-Gated ALU wave forms
 ![Clock Gated ALU waveform](images/clock_waveform.jpg)
+
+### Power Reports
+
+![Normal ALU Report](images/normal_power.jpg)
+
+![Clock Gated ALU report](images/clock_power.jpg)
