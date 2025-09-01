@@ -1,0 +1,28 @@
+module clock(
+    input wire [31:0] A, B,       // 32-bit inputs
+    input wire [3:0] ALUCtrl,     // Control signal to select operation
+    input wire clk,               // Clock signal
+    input wire enable,            // Clock gating enable signal
+    output reg [31:0] ALUResult,  // ALU output
+    output reg Zero               // Zero flag
+);
+
+    // Clock gating logic
+    wire gated_clk;
+    assign gated_clk = clk & enable;  // Enable clock only when 'enable' is high
+
+    // ALU operations (sequential with clock gating)
+    always @(posedge gated_clk) begin
+        case (ALUCtrl)
+            4'b0000: ALUResult = A + B;   // Addition
+            4'b0001: ALUResult = A - B;   // Subtraction
+            4'b0010: ALUResult = A & B;   // AND
+            4'b0011: ALUResult = A | B;   // OR
+            default: ALUResult = 32'b0;   // Default case
+        endcase
+
+        // Zero flag
+        Zero = (ALUResult == 32'b0);
+    end
+
+endmodule

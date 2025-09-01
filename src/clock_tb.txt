@@ -1,0 +1,81 @@
+`timescale 1ns / 1ps
+
+module clock_tb;
+    reg [31:0] A, B;
+    reg [3:0] ALUCtrl;
+    reg clk, enable;
+    wire [31:0] ALUResult;
+    wire Zero;
+
+    // Instantiate the ALU module
+    clock uut (
+        .A(A),
+        .B(B),
+        .ALUCtrl(ALUCtrl),
+        .clk(clk),
+        .enable(enable),
+        .ALUResult(ALUResult),
+        .Zero(Zero)
+    );
+
+    // Clock generation (10 ns period)
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;  // Toggle clock every 5 ns
+    end
+
+    // Stimulus
+    initial begin
+        // Test 1: Addition
+        A = 32'h00000010;   // 16
+        B = 32'h00000005;   // 5
+        ALUCtrl = 4'b0000;  // Addition
+        enable = 1;         // Enable clock gating
+        #10;
+        $display("Test 1: Addition");
+        $display("A = %h, B = %h, ALUCtrl = %b, ALUResult = %h, Zero = %b", 
+                  A, B, ALUCtrl, ALUResult, Zero);
+
+        // Test 2: Subtraction
+        A = 32'h00000010;   // 16
+        B = 32'h00000010;   // 16
+        ALUCtrl = 4'b0001;  // Subtraction
+        enable = 1;
+        #10;
+        $display("Test 2: Subtraction");
+        $display("A = %h, B = %h, ALUCtrl = %b, ALUResult = %h, Zero = %b", 
+                  A, B, ALUCtrl, ALUResult, Zero);
+
+        // Test 3: AND
+        A = 32'h0000000F;   // 15
+        B = 32'h00000003;   // 3
+        ALUCtrl = 4'b0010;  // AND
+        enable = 1;
+        #10;
+        $display("Test 3: AND");
+        $display("A = %h, B = %h, ALUCtrl = %b, ALUResult = %h, Zero = %b", 
+                  A, B, ALUCtrl, ALUResult, Zero);
+
+        // Test 4: OR
+        A = 32'h0000000F;   // 15
+        B = 32'h00000030;   // 48
+        ALUCtrl = 4'b0011;  // OR
+        enable = 1;
+        #10;
+        $display("Test 4: OR");
+        $display("A = %h, B = %h, ALUCtrl = %b, ALUResult = %h, Zero = %b", 
+                  A, B, ALUCtrl, ALUResult, Zero);
+
+        // Test 5: Clock gating disabled
+        A = 32'h00000005;   
+        B = 32'h00000003;
+        ALUCtrl = 4'b0000;  // Addition
+        enable = 0;         // Disable clock gating
+        #10;
+        $display("Test 5: Clock Disabled (no update expected)");
+        $display("A = %h, B = %h, ALUCtrl = %b, ALUResult = %h, Zero = %b", 
+                  A, B, ALUCtrl, ALUResult, Zero);
+
+        $stop;  // End simulation
+    end
+endmodule
