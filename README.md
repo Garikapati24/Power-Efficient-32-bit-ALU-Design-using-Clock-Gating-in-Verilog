@@ -1,0 +1,1 @@
+# Power-Efficient-32-bit-ALU-Design-using-Clock-Gating-in-Verilog
